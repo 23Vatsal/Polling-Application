@@ -11,7 +11,7 @@ import com.pollingApp.pollingApp.models.User;
 import com.pollingApp.pollingApp.repositories.UserRepository;
 
 @Service
-public class CustomerUserDeatilsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService{
 	
 	@Autowired
 	UserRepository userRepository;
