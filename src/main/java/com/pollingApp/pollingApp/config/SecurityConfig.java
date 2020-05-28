@@ -16,8 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.pollingApp.pollingApp.config.security.CustomUserDetailsService;
+import com.pollingApp.pollingApp.security.CustomUserDetailsService;
 import com.pollingApp.pollingApp.security.JwtAuthenticationEntryPoint;
+import com.pollingApp.pollingApp.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -94,4 +95,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
 
+}
 }
