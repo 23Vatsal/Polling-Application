@@ -22,35 +22,27 @@ public class JwtTokenProvider {
 	private static final Logger logger=LoggerFactory.getLogger(JwtTokenProvider.class);
 	
 	@Value("${app.jwtSecret}")
-	private String jwtSecret;
-	
-	@Value("${app.jwtExpirationInMs}")
-	private String jwtExpirationInMs;
-	
-	public String generateToken(Authentication authentication) {
-		
-		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-		
-		Date now = new Date();
-		String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
-		DateFormat formatter = new SimpleDateFormat(DEFAULT_PATTERN);
-        Date expiryDate = null;
-		try {
-			expiryDate = formatter.parse(now.getTime() + jwtExpirationInMs);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
+    private String jwtSecret;
+
+    @Value("${app.jwtExpirationInMs}")
+    private int jwtExpirationInMs;
+
+    public String generateToken(Authentication authentication) {
+
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
+
         return Jwts.builder()
                 .setSubject(Long.toString(userPrincipal.getId()))
                 .setIssuedAt(new Date())
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
-	}
-	
-	public Long getUserIdFromJWT(String token) {
+    }
+
+    public Long getUserIdFromJWT(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)

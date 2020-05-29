@@ -1,5 +1,8 @@
 package com.pollingApp.pollingApp.config;
 
+import com.pollingApp.pollingApp.security.CustomUserDetailsService;
+import com.pollingApp.pollingApp.security.JwtAuthenticationEntryPoint;
+import com.pollingApp.pollingApp.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.pollingApp.pollingApp.security.CustomUserDetailsService;
-import com.pollingApp.pollingApp.security.JwtAuthenticationEntryPoint;
-import com.pollingApp.pollingApp.security.JwtAuthenticationFilter;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -27,9 +26,9 @@ import com.pollingApp.pollingApp.security.JwtAuthenticationFilter;
         jsr250Enabled = true,
         prePostEnabled = true
 )
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-	
-	@Autowired
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
     CustomUserDetailsService customUserDetailsService;
 
     @Autowired
@@ -94,6 +93,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-
-}
+    }
 }
